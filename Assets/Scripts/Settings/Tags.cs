@@ -8,6 +8,7 @@ namespace Settings
         public string WALL_TAG = "Wall";
         public string DANGER_TAG = "Danger";
         public string INTERACT_TAG = "InteractIndicator";
+        public string INTERACTABLE_TAG = "Interactable";
         public string GAME_INPUT_TAG = "GameInput";
         public string PLAYER_SPAWN_TAG = "PlayerSpawn";
         public string PLAYER_CANVAS_TAG = "PlayerCanvas";

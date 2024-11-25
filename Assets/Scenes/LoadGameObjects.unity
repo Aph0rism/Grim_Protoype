@@ -648,6 +648,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 126195196}
     - target: {fileID: 5542306801200826805, guid: d8309fd3ca28e1e499f5847375a94a9e, type: 3}
+      propertyPath: hitEffect
+      value: 
+      objectReference: {fileID: 8484626733546680864, guid: 5c5a2b4fa831df34aac861c8e6216ddf, type: 3}
+    - target: {fileID: 5542306801200826805, guid: d8309fd3ca28e1e499f5847375a94a9e, type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 1350455762}
