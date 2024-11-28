@@ -9,6 +9,9 @@ using UnityEngine.Serialization;
 
 namespace Player
 {
+    /// <summary>
+    /// Gestion des controles du personnage
+    /// </summary>
     public class PlayerController : MonoBehaviour
     {
         private const string IS_WALKING = "IsWalking";
@@ -18,6 +21,7 @@ namespace Player
         [SerializeField] private GameInput input;
         [SerializeField] private Camera mainCamera;
         [SerializeField] private NavMeshAgent agent;
+        [SerializeField] private float baseReach = 2f;
 
         [Header("Movement")] [SerializeField] private ParticleSystem clickEffect;
         [SerializeField] private LayerMask clickableLayers;
@@ -28,7 +32,6 @@ namespace Player
         [Header("Attack")] [SerializeField] private ParticleSystem hitEffect;
         [SerializeField] private float attackSpeed = 1.5f;
         [SerializeField] private float attackDelay = 0.3f;
-        [SerializeField] private float baseReach = 2f;
         [SerializeField] private int attackDamage = 1;
 
         Interactable _target;
@@ -37,22 +40,29 @@ namespace Player
         private readonly Scenes _scenes = new Scenes();
         private readonly Tags _tags = new Tags();
 
+        // Initialisation de l'animator et de l'agent de pathfinding
         void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
             _animator = GetComponentInChildren<Animator>();
         }
-
+        
         private void Start()
         {
             AssignInputs();
         }
 
+        /// <summary>
+        /// Intialise le point and click
+        /// </summary>
         void AssignInputs()
         {
             input.GetInput().Player.Move.performed += ctx => ClickToMove();
         }
 
+        /// <summary>
+        /// Vérifie le point chosi et initialise le déplacement
+        /// </summary>
         void ClickToMove()
         {
             RaycastHit hit;
@@ -80,6 +90,7 @@ namespace Player
             }
         }
 
+        // Sécurité pour la gestion du pathfinding puis gestion du déplacement et du visuel
         void Update()
         {
             if (SceneManager.GetActiveScene().name == _scenes.HUB_SCENE ||
@@ -93,6 +104,9 @@ namespace Player
             SetAnimations();
         }
 
+        /// <summary>
+        /// Déplacement vers le lieu choisi et vérification de la distance d'atteint pour l'interaction
+        /// </summary>
         void FollowTarget()
         {
             if (_target == null)
@@ -110,6 +124,9 @@ namespace Player
             }
         }
 
+        /// <summary>
+        /// Rotation du personnage vers le lieu choisi
+        /// </summary>
         void FaceTarget()
         {
             if (agent.destination == transform.position) return;
@@ -130,6 +147,9 @@ namespace Player
                 Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * _lookRotationSpeed);
         }
 
+        /// <summary>
+        /// Choix de l'interaction en fonction du type de l'objet ciblé
+        /// </summary>
         void ReachDistance()
         {
             agent.SetDestination(transform.position);
@@ -140,10 +160,13 @@ namespace Player
             
             Debug.Log(_target.interactionType);
 
+            #region InteractionType
+
             switch (_target.interactionType)
             {
                 case InteractableType.Enemy:
                     Invoke(nameof(SendAttack), attackDelay);
+                    _target = null;
                     Invoke(nameof(ResetBusyState), attackSpeed);
                     break;
                 case InteractableType.Item:
@@ -153,19 +176,34 @@ namespace Player
                     break;
                 case InteractableType.Props:
                     _target.InteractWithProps();
+                    _target = null;
                     Invoke(nameof(ResetBusyState), 0.5f);
                     break;
                 case InteractableType.Gate:
                     _target.InteractWithGate();
+                    _target = null;
+                    agent.enabled = false;
+                    Invoke(nameof(ResetBusyState), 0.5f);
+                    break;
+                case InteractableType.EndGame:
+                    _target.InteractWithEndGame();
+                    _target = null;
+                    agent.enabled = false;
                     Invoke(nameof(ResetBusyState), 0.5f);
                     break;
                 case InteractableType.Storage:
                     _target.InteractWithStorage();
+                    _target = null;
                     Invoke(nameof(ResetBusyState), 0.5f);
                     break;
             }
+
+            #endregion
         }
 
+        /// <summary>
+        /// Attaque du personnage
+        /// </summary>
         void SendAttack()
         {
             if (_target == null) return;
@@ -180,12 +218,18 @@ namespace Player
             _target.TakeDamage(attackDamage);
         }
 
+        /// <summary>
+        /// Délai pour les interactions
+        /// </summary>
         void ResetBusyState()
         {
             _playerBusy = false;
             SetAnimations();
         }
 
+        /// <summary>
+        /// Gestion des animations du personnage
+        /// </summary>
         void SetAnimations()
         {
             if (agent.velocity == Vector3.zero)

@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Player
 {
+    /// <summary>
+    /// Ancien code de déplacement avec WASD et le joystick gauche
+    /// </summary>
     public class OldPlayerMovement : MonoBehaviour
     {
         [SerializeField] private float moveSpeed = 7f;

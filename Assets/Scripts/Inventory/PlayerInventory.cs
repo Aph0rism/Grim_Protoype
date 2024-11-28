@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Inventory
 {
+    /// <summary>
+    /// Gestion de l'inventaire du personnage
+    /// </summary>
     public class PlayerInventory : MonoBehaviour
     {
         [SerializeField] private int weight = 0;

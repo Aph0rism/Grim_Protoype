@@ -1,4 +1,3 @@
-using System;
 using Settings;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,9 +5,9 @@ using UnityEngine.SceneManagement;
 namespace UI
 {
     /// <summary>
-    /// Gestion du menu de départ
+    /// Gestion du menu de game over
     /// </summary>
-    public class StartMenu : MonoBehaviour
+    public class GameOver : MonoBehaviour
     {
         private readonly Scenes _scenes = new Scenes();
         

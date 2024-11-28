@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace Settings
 {
+    /// <summary>
+    /// Regroupe tous les noms des scènes du projet
+    /// </summary>
     public class Scenes
     {
         public string HUB_SCENE = "Hub";

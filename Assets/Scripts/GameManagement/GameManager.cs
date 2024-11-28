@@ -6,6 +6,9 @@ using UnityEngine.PlayerLoop;
 
 namespace GameManagement
 {
+    /// <summary>
+    /// Gestion du système de combat du jeu
+    /// </summary>
     public class GameManager : MonoBehaviour
     {
         [SerializeField] private int actionLength = 1000;
@@ -57,7 +60,10 @@ namespace GameManagement
             }
         }
 
-        private void PrintQueue() // affiche les actions de la file dans la console
+        /// <summary>
+        /// affiche les actions de la file dans la console
+        /// </summary>
+        private void PrintQueue()
         {
             foreach (Action action in actionQueue)
             {

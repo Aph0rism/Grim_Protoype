@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace Inventory
 {
+    /// <summary>
+    /// Objet de base du jeu
+    /// </summary>
     [CreateAssetMenu(fileName = "Item", menuName = "Scriptable Objects/Item")]
     public class Item : ScriptableObject
     {

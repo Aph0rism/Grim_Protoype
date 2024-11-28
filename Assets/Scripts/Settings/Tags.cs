@@ -1,5 +1,8 @@
 namespace Settings
 {
+    /// <summary>
+    /// Regroupe tous les noms des tags du projet
+    /// </summary>
     public class Tags
     {
         public string PLAYER_TAG = "Player";

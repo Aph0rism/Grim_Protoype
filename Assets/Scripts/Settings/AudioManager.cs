@@ -2,18 +2,11 @@ using UnityEngine;
 
 namespace Settings
 {
+    /// <summary>
+    /// Gestion des sons du jeu
+    /// </summary>
     public class AudioManager : MonoBehaviour
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
+        // Gestion des sons
     }
 }

@@ -1,5 +1,8 @@
 namespace GameManagement
 {
+    /// <summary>
+    /// Définition des actions du jeu
+    /// </summary>
     public class Action
     {
         public string Holder;
